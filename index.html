@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#111413" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f1f3f2" media="(prefers-color-scheme: light)" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath d='M3.5 14 18 4l14.5 10v18.5h-29Z' fill='%23181c20'/%3E%3Cpath d='M9 16.5h18v16H9Z' fill='%23168cff'/%3E%3Cpath d='M9 22h18M9 27.5h18' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <title>LeadGarage — The CRM for Trades</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f1f3f2;
+      --bg-raised: #fafbfa;
+      --panel: #ffffff;
+      --ink: #151918;
+      --muted: #5e6764;
+      --soft: #e0e5e3;
+      --line: #c7cfcc;
+      --accent: #168cff;
+      --accent-deep: #0067c7;
+      --accent-soft: #d8ebff;
+      --steel: #303b38;
+      --green: #287553;
+      --shadow: 0 20px 55px rgba(25, 34, 31, .13);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 24px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101312;
+        --bg-raised: #181c1a;
+        --panel: #202522;
+        --ink: #f0f3f1;
+        --muted: #b4bdb9;
+        --soft: #29302d;
+        --line: #404944;
+        --accent: #4aa7ff;
+        --accent-deep: #75bcff;
+        --accent-soft: #163b5f;
+        --steel: #afc0ba;
+        --green: #72c89b;
+        --shadow: 0 22px 64px rgba(0, 0, 0, .35);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", sans-serif; line-height: 1.55; overflow-x: hidden; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    button { font: inherit; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .page { min-height: 100vh; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    .site-nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--line); }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-size: 1.15rem; line-height: 1; letter-spacing: -.035em; font-weight: 760; }
+    .brand strong { color: var(--accent-deep); font-weight: 840; }
+    .garage-logo { width: 34px; height: 34px; overflow: visible; flex: 0 0 auto; }
+    .garage-logo .roof { fill: var(--ink); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+    .garage-logo .door { fill: var(--accent); }
+    .garage-logo .slat { stroke: var(--bg-raised); stroke-width: 2; }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { text-decoration: none; font-size: .92rem; font-weight: 600; }
+    .nav-links a:hover { color: var(--accent-deep); }
+    .login-link { border: 0; padding: 8px 0; background: transparent; color: var(--ink); font-size: .92rem; font-weight: 700; cursor: pointer; }
+    .login-link:hover { color: var(--accent-deep); }
+    .nav-cta { border: 1px solid var(--ink); padding: 9px 14px; border-radius: var(--radius-sm); }
+    .mobile-menu { display: none; border: 0; background: transparent; color: var(--ink); padding: 8px; }
+    .mobile-menu svg { display: block; }
+
+    .hero { position: relative; display: grid; grid-template-columns: .88fr 1.12fr; align-items: center; gap: clamp(36px, 6vw, 88px); padding: clamp(64px, 9vw, 122px) 0 96px; }
+    .hero::after { content: ""; position: absolute; z-index: -1; width: 42vw; height: 42vw; max-width: 620px; max-height: 620px; right: -15vw; top: 8%; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 32px 32px; opacity: .25; mask-image: linear-gradient(135deg, black, transparent 72%); }
+    .eyebrow { margin: 0 0 16px; font-weight: 600; color: var(--accent-deep); font-size: .92rem; }
+    h1, h2, h3 { font-family: "Barlow Condensed", sans-serif; line-height: .98; margin-top: 0; }
+    h1 { font-size: clamp(3.7rem, 7.2vw, 6.9rem); letter-spacing: -.035em; margin-bottom: 24px; max-width: 710px; }
+    .hero-copy > p:not(.eyebrow) { max-width: 590px; margin: 0 0 30px; font-size: clamp(1.05rem, 1.4vw, 1.25rem); color: var(--muted); }
+    .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 0 20px; border-radius: var(--radius-sm); text-decoration: none; font-weight: 600; border: 1px solid var(--ink); transition: background .2s ease, color .2s ease, border-color .2s ease; }
+    .button.primary { background: var(--ink); color: var(--bg-raised); }
+    .button.primary:hover { background: var(--accent); color: #07121d; border-color: var(--accent); }
+    .button.secondary { background: transparent; }
+    .button.secondary:hover { border-color: var(--accent); color: var(--accent-deep); }
+    .trust-line { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 18px; color: var(--muted); font-size: .88rem; }
+    .trust-line span { display: flex; align-items: center; gap: 7px; }
+    .trust-line svg { color: var(--green); flex: 0 0 auto; }
+
+    .workbench { position: relative; background: #171c21; color: #f3f6f8; border-radius: 24px 24px 10px 10px; padding: 14px; box-shadow: var(--shadow); border: 1px solid #3c4651; transform: rotate(.65deg); }
+    .workbench::before { content: ""; position: absolute; height: 7px; left: 18%; right: 18%; bottom: -7px; background: #168cff; border-radius: 0 0 7px 7px; }
+    .browser-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 4px 12px; }
+    .dots { display: flex; gap: 6px; }
+    .dots i { width: 7px; height: 7px; border-radius: 50%; background: #697580; }
+    .demo-label { font-size: .7rem; color: #b8c2cb; }
+    .app-shell { background: #f3f5f7; color: #202429; border-radius: 14px 14px 6px 6px; overflow: hidden; min-height: 472px; display: grid; grid-template-columns: 140px minmax(0, 1fr); }
+    .app-rail { background: #20262d; padding: 18px 12px 13px; display: flex; flex-direction: column; align-items: stretch; gap: 7px; color: #f2f6fa; }
+    .app-wordmark { display: flex; align-items: center; gap: 7px; margin: 0 2px 16px; font-size: .67rem; font-weight: 760; letter-spacing: -.03em; }
+    .app-wordmark strong { color: #2994ff; }
+    .app-wordmark .garage-logo { width: 24px; height: 24px; }
+    .app-wordmark .garage-logo .roof { fill: #f2f6fa; stroke: #f2f6fa; }
+    .app-wordmark .garage-logo .slat { stroke: #20262d; }
+    .rail-group { padding: 8px 0 7px; border-bottom: 1px solid #3d4651; }
+    .rail-label { display: flex; align-items: center; gap: 6px; color: #d8e0e7; font-size: .55rem; font-weight: 760; }
+    .rail-label svg { color: #55aaff; }
+    .rail-sub { display: flex; justify-content: space-between; gap: 6px; padding: 5px 6px 4px 19px; color: #aeb9c5; font-size: .48rem; }
+    .rail-sub.active { margin-top: 5px; border-radius: 4px; background: #006fff; color: white; }
+    .rail-account { margin-top: auto; padding-top: 9px; border-top: 1px solid #3d4651; color: #9aa6b2; font-size: .47rem; }
+    .app-main { background: #fff; overflow: hidden; }
+    .app-head { min-height: 74px; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 16px 18px; border-bottom: 1px solid #cdd5de; }
+    .app-head strong { display: block; font-size: 1rem; line-height: 1.1; }
+    .app-head small { display: block; margin-top: 3px; color: #606a75; font-size: .52rem; }
+    .header-tools { display: flex; align-items: center; gap: 6px; }
+    .filter-button { width: 29px; height: 29px; display: grid; place-items: center; border: 1px solid #cdd5de; border-radius: 6px; background: #e8edf2; color: #202429; position: relative; }
+    .filter-button::after { content: ""; position: absolute; width: 6px; height: 6px; right: 3px; top: 3px; border: 1px solid white; border-radius: 50%; background: #006fff; }
+    .add-button { font-size: .58rem; background: #006fff; color: white; padding: 8px 10px; border-radius: 6px; font-weight: 700; }
+    .app-search { margin: 10px 14px; min-height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 10px; border: 1px solid #cdd5de; border-radius: 6px; background: #f3f5f7; color: #606a75; font-size: .55rem; }
+    .customer-list { display: grid; }
+    .customer { background: white; border-top: 1px solid #d9dfe5; padding: 10px 14px; display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 9px; align-items: center; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #004fb8; font-size: .56rem; font-weight: 800; background: #e8edf2; }
+    .customer-copy { min-width: 0; }
+    .customer-copy strong { display: block; font-size: .66rem; }
+    .customer-copy small { display: block; overflow: hidden; color: #606a75; font-size: .49rem; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+    .stage-pill { width: fit-content; display: inline-flex; margin-top: 3px; border: 1px solid #abd9bb; border-radius: 4px; padding: 1px 5px; color: #1a643b; background: #d6f1df; font-size: .44rem; font-weight: 750; }
+    .stage-pill.purple { color: #6826b7; background: #eee4ff; border-color: #d2b9f5; }
+    .stage-pill.orange { color: #963d18; background: #ffeadf; border-color: #efb598; }
+    .revenue-copy { color: #004fb8; font-size: .49rem; font-weight: 760; text-align: right; white-space: nowrap; }
+
+    .trade-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 0; }
+    .trade-strip .wrap { display: flex; align-items: center; gap: 20px; }
+    .trade-strip strong { font-family: "Barlow Condensed", sans-serif; font-size: 1.3rem; white-space: nowrap; }
+    .trade-list { display: flex; gap: 8px; flex-wrap: wrap; }
+    .trade-list span { background: var(--soft); padding: 6px 10px; border-radius: 5px; color: var(--muted); font-size: .83rem; }
+
+    section { scroll-margin-top: 24px; }
+    .section-head { display: grid; grid-template-columns: .7fr 1fr; gap: 40px; align-items: end; margin-bottom: 42px; }
+    .section-head h2 { font-size: clamp(3rem, 5.2vw, 5.1rem); margin-bottom: 0; letter-spacing: -.025em; }
+    .section-head p { color: var(--muted); max-width: 600px; margin: 0 0 7px; font-size: 1.08rem; }
+    .workflow { padding: 112px 0; }
+    .workflow-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 20px; }
+    .workflow-nav { display: grid; gap: 10px; align-content: start; }
+    .workflow-tab { width: 100%; text-align: left; border: 0; border-top: 1px solid var(--line); background: transparent; color: var(--ink); padding: 20px 12px 20px 0; cursor: pointer; display: grid; grid-template-columns: 36px 1fr; gap: 14px; }
+    .workflow-tab:last-child { border-bottom: 1px solid var(--line); }
+    .workflow-tab .num { font: 600 1.35rem/1 "Barlow Condensed", sans-serif; color: var(--muted); }
+    .workflow-tab strong { display: block; font-family: "Barlow Condensed", sans-serif; font-size: 1.6rem; line-height: 1; margin-bottom: 6px; }
+    .workflow-tab small { color: var(--muted); font-size: .85rem; }
+    .workflow-tab[aria-selected="true"] { color: var(--accent-deep); }
+    .workflow-tab[aria-selected="true"] .num { color: var(--accent); }
+    .workflow-tab[aria-selected="true"] strong::after { content: " →"; }
+    .product-stage { background: var(--steel); color: var(--bg-raised); min-height: 520px; border-radius: var(--radius-lg) var(--radius-lg) 8px var(--radius-lg); padding: clamp(22px, 3.3vw, 40px); overflow: hidden; position: relative; }
+    .stage-label { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 28px; color: var(--bg-raised); }
+    .stage-label strong { font-family: "Barlow Condensed", sans-serif; font-size: 1.5rem; }
+    .stage-label small { opacity: .72; }
+    .stage-content { animation: reveal .3s ease both; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(6px); } }
+    .pipeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .column { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); padding: 12px; border-radius: 10px; min-height: 330px; }
+    .column-head { display: flex; justify-content: space-between; align-items: center; font-size: .72rem; margin-bottom: 12px; opacity: .9; }
+    .lead-card { background: #fbfcfb; color: #202522; padding: 11px; border-radius: 7px; margin-bottom: 8px; box-shadow: 0 8px 16px rgba(0,0,0,.08); }
+    .lead-card strong { display: block; font-size: .72rem; }
+    .lead-card small { color: #67716c; font-size: .61rem; }
+    .lead-card .service { display: inline-block; margin-top: 9px; color: #07599f; background: #dceeff; padding: 3px 5px; border-radius: 4px; font-size: .52rem; }
+    .calendar-board { display: grid; grid-template-columns: 1.2fr .8fr; gap: 12px; }
+    .calendar-card, .agenda { background: #fbfcfb; color: #202522; border-radius: 10px; padding: 15px; }
+    .calendar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: .72rem; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+    .day { aspect-ratio: 1; border: 1px solid #dfe4e1; border-radius: 5px; display: grid; place-items: center; font-size: .58rem; position: relative; }
+    .day.muted { color: #a6aca9; }
+    .day.booked { background: #e0efff; border-color: #168cff; font-weight: 700; }
+    .day.booked::after { content: ""; position: absolute; width: 4px; height: 4px; background: #168cff; border-radius: 50%; bottom: 3px; }
+    .agenda h4 { margin: 0 0 12px; font-size: .8rem; }
+    .appt { border-left: 3px solid #168cff; padding: 8px 0 8px 9px; margin-bottom: 8px; }
+    .appt strong { display: block; font-size: .68rem; }
+    .appt small { color: #717b76; font-size: .57rem; }
+    .record-sheet { background: #fbfcfb; color: #202522; border-radius: 10px; padding: 18px; }
+    .record-top { display: flex; align-items: center; gap: 13px; padding-bottom: 15px; border-bottom: 1px solid #dce2df; }
+    .record-avatar { width: 46px; height: 46px; border-radius: 9px; display: grid; place-items: center; background: #31564d; color: white; font-weight: 700; }
+    .record-top h4 { margin: 0 0 2px; font-size: .92rem; }
+    .record-top small { color: #707a75; }
+    .quick-actions { margin-left: auto; display: flex; gap: 5px; }
+    .quick-actions span { background: #e8ecea; border-radius: 5px; padding: 6px 8px; font-size: .56rem; }
+    .record-body { display: grid; grid-template-columns: .8fr 1.2fr; gap: 20px; padding-top: 17px; }
+    .detail-stack { display: grid; gap: 10px; }
+    .detail { font-size: .64rem; }
+    .detail span { display: block; color: #747e79; font-size: .54rem; }
+    .timeline h5 { margin: 0 0 11px; font-size: .7rem; }
+    .timeline-item { position: relative; border-left: 1px solid #d3d9d6; padding: 0 0 14px 14px; font-size: .63rem; }
+    .timeline-item::before { content: ""; position: absolute; left: -4px; top: 2px; width: 7px; height: 7px; border-radius: 50%; background: #168cff; }
+    .timeline-item small { display: block; color: #747e79; }
+    .actual-shell { overflow: hidden; border-radius: 9px; background: #f3f5f7; color: #202429; box-shadow: 0 14px 34px rgba(0,0,0,.14); }
+    .actual-head { min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 15px; border-bottom: 1px solid #cdd5de; background: white; }
+    .actual-head strong { display: block; font-size: .76rem; }
+    .actual-head small { display: block; margin-top: 2px; color: #606a75; font-size: .54rem; }
+    .actual-actions { display: flex; gap: 6px; }
+    .actual-search { min-height: 34px; display: flex; align-items: center; gap: 7px; margin: 10px 12px; padding: 0 10px; border: 1px solid #cdd5de; border-radius: 6px; background: #f3f5f7; color: #606a75; font-size: .56rem; }
+    .actual-row { display: grid; grid-template-columns: 32px minmax(0,1fr) auto; align-items: center; gap: 9px; padding: 10px 12px; border-top: 1px solid #d8dee5; background: #fff; }
+    .actual-row .avatar { width: 32px; height: 32px; }
+    .actual-copy { min-width: 0; }
+    .actual-copy strong { display: block; font-size: .66rem; }
+    .actual-copy small { display: block; overflow: hidden; color: #606a75; font-size: .49rem; text-overflow: ellipsis; white-space: nowrap; }
+    .actual-total { color: #004fb8; font-size: .53rem; font-weight: 760; white-space: nowrap; }
+    .calendar-real { display: grid; grid-template-columns: repeat(7, 1fr); border-left: 1px solid #cdd5de; }
+    .calendar-real .weekday { padding: 7px 2px; border-right: 1px solid #cdd5de; border-bottom: 1px solid #cdd5de; color: #606a75; text-align: center; font-size: .47rem; font-weight: 760; }
+    .calendar-real .day { min-height: 45px; aspect-ratio: auto; place-items: start; padding: 6px; border: 0; border-right: 1px solid #cdd5de; border-bottom: 1px solid #cdd5de; border-radius: 0; background: #fff; font-size: .5rem; }
+    .calendar-real .day.booked { box-shadow: inset 0 0 0 2px #006fff; background: #f8fbff; }
+    .calendar-real .day.booked::after { left: 7px; right: auto; bottom: 7px; width: 5px; height: 5px; }
+    .calendar-real .day.muted { background: #eef1f4; }
+    .day-agenda-mini { padding: 13px 15px 15px; background: white; }
+    .agenda-title { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 2px solid #202429; font-size: .6rem; }
+    .agenda-row { display: grid; grid-template-columns: 56px minmax(0,1fr) auto; gap: 9px; padding: 9px 0; border-bottom: 1px solid #d8dee5; font-size: .55rem; }
+    .agenda-row time { color: #004fb8; font-weight: 750; }
+    .agenda-row small { display: block; color: #606a75; }
+    .money-line { display: block; margin-top: 3px; font-size: .48rem; font-weight: 760; }
+    .paid-badge, .unpaid-badge { display: inline-block; margin-left: 5px; padding: 1px 5px; border-radius: 999px; font-size: .42rem; }
+    .paid-badge { color: #004fb8; background: #dceeff; }
+    .unpaid-badge { color: #a5413c; background: #f8e4e2; }
+    .record-real { background: white; color: #202429; border-radius: 9px; padding: 16px; }
+    .record-real .record-top { padding-bottom: 12px; }
+    .record-real .record-avatar { background: #e8edf2; color: #004fb8; border-radius: 50%; }
+    .record-statuses { display: flex; gap: 5px; margin-top: 5px; }
+    .record-real .quick-actions span { border: 1px solid #cdd5de; background: #e8edf2; }
+    .record-money { display: flex; justify-content: space-between; gap: 10px; margin: 12px 0; padding: 9px 10px; border: 1px solid #cdd5de; border-radius: 6px; background: #f3f5f7; font-size: .57rem; }
+    .record-money strong { color: #004fb8; }
+    .record-real .record-body { grid-template-columns: 1fr 1.2fr; gap: 18px; padding-top: 10px; }
+    .record-notes h5 { margin: 0 0 7px; padding-bottom: 6px; border-bottom: 2px solid #202429; font-size: .65rem; }
+    .pinned-mini { padding: 8px 0; border-bottom: 1px solid #d8dee5; font-size: .55rem; }
+    .pinned-mini small { display: block; color: #606a75; font-size: .46rem; }
+    .follow-mini { margin-top: 9px; color: #606a75; font-size: .5rem; font-weight: 760; }
+    .note-mini { margin-top: 6px; padding: 7px 8px; border: 1px solid #cdd5de; border-radius: 5px; color: #606a75; font-size: .5rem; }
+    .invoice-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #d8dee5; }
+    .invoice-tabs button { border: 0; border-right: 1px solid #d8dee5; padding: 9px 12px; background: #f7f8fa; color: #606a75; font: inherit; font-size: .56rem; font-weight: 800; cursor: pointer; }
+    .invoice-tabs button:last-child { border-right: 0; }
+    .invoice-tabs button.active { background: #202429; color: white; }
+    .invoice-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 10px 12px; overflow: hidden; border: 1px solid #cdd5de; border-radius: 7px; background: #cdd5de; }
+    .invoice-summary div { padding: 10px 11px; background: white; }
+    .invoice-summary span { display: block; color: #606a75; font-size: .5rem; }
+    .invoice-summary strong { color: #004fb8; font-size: .9rem; }
+    .invoice-filter-line { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-top: 1px solid #d8dee5; border-bottom: 2px solid #202429; background: white; font-size: .56rem; }
+    .invoice-filter-line span:last-child { color: #004fb8; font-weight: 750; }
+
+    .features { background: var(--bg-raised); padding: 112px 0; border-block: 1px solid var(--line); }
+    .feature-ledger { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--line); }
+    .feature { display: grid; grid-template-columns: 46px 1fr; gap: 18px; padding: 30px 34px 30px 0; border-bottom: 1px solid var(--line); }
+    .feature:nth-child(odd) { border-right: 1px solid var(--line); }
+    .feature:nth-child(even) { padding-left: 34px; }
+    .feature-number { color: var(--accent-deep); font: 600 1.25rem "Barlow Condensed", sans-serif; }
+    .feature h3 { font-size: 1.85rem; margin: 0 0 7px; }
+    .feature p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+    .difference { padding: 112px 0; }
+    .difference-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
+    .difference h2 { font-size: clamp(3.2rem, 5.5vw, 5.6rem); margin-bottom: 24px; }
+    .difference .lead { color: var(--muted); font-size: 1.12rem; margin-bottom: 30px; }
+    .promise { display: grid; grid-template-columns: 22px 1fr; gap: 12px; margin: 18px 0; }
+    .promise svg { margin-top: 3px; color: var(--accent-deep); }
+    .promise strong { display: block; margin-bottom: 3px; }
+    .promise p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .job-card { background: var(--ink); color: var(--bg-raised); border-radius: 8px 28px 8px 8px; padding: clamp(28px, 5vw, 58px); box-shadow: var(--shadow); position: sticky; top: 24px; }
+    .job-card .label { color: var(--accent); font-weight: 600; font-size: .83rem; }
+    .job-card blockquote { font-family: "Barlow Condensed", sans-serif; font-size: clamp(2.1rem, 3.5vw, 3.4rem); line-height: 1.04; margin: 26px 0 34px; }
+    .job-flow { display: grid; gap: 0; }
+    .job-step { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 13px 0; border-top: 1px solid color-mix(in srgb, var(--bg-raised), transparent 76%); }
+    .job-step span { color: var(--accent); font: 600 1.2rem "Barlow Condensed", sans-serif; }
+    .job-step strong { font-size: .9rem; }
+
+    .faq { padding: 100px 0; background: var(--bg-raised); border-top: 1px solid var(--line); }
+    .faq-grid { display: grid; grid-template-columns: .58fr 1fr; gap: 70px; }
+    .faq h2 { font-size: clamp(3rem, 5vw, 4.9rem); }
+    details { border-top: 1px solid var(--line); padding: 18px 0; }
+    details:last-child { border-bottom: 1px solid var(--line); }
+    summary { cursor: pointer; list-style: none; font-weight: 600; padding-right: 30px; position: relative; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; position: absolute; right: 4px; top: -2px; color: var(--accent-deep); font-size: 1.3rem; }
+    details[open] summary::after { content: "−"; }
+    details p { color: var(--muted); margin: 13px 40px 3px 0; font-size: .92rem; }
+
+    .login-backdrop[hidden] { display: none; }
+    .login-backdrop { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(7, 12, 16, .72); }
+    .login-dialog { width: min(440px, 100%); overflow: hidden; border: 1px solid #3e4954; border-radius: 16px 16px 6px 16px; background: #171c21; color: #f2f6fa; box-shadow: 0 28px 80px rgba(0,0,0,.48); }
+    .login-head { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 20px; border-bottom: 1px solid #333d47; }
+    .login-head .brand { color: #f2f6fa; }
+    .login-head .brand strong { color: #4aa7ff; }
+    .login-head .garage-logo .roof { fill: #f2f6fa; stroke: #f2f6fa; }
+    .login-head .garage-logo .slat { stroke: #171c21; }
+    .login-close { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid #3e4954; border-radius: 50%; background: #242b33; color: #f2f6fa; cursor: pointer; }
+    .login-body { display: grid; gap: 16px; padding: 24px 20px 22px; }
+    .login-intro h2 { margin: 0 0 5px; font-size: 2rem; }
+    .login-intro p { margin: 0; color: #b8c2cb; font-size: .88rem; }
+    .login-field { display: grid; gap: 7px; color: #c5ced6; font-size: .8rem; font-weight: 700; }
+    .login-field input { width: 100%; min-height: 48px; padding: 11px 12px; border: 1px solid #47535f; border-radius: 7px; outline: 0; background: #242b33; color: #f2f6fa; font: inherit; }
+    .login-field input:focus { border-color: #4aa7ff; box-shadow: 0 0 0 3px rgba(74, 167, 255, .2); }
+    .login-error { margin: 0; padding: 10px 12px; border: 1px solid #8c4e4a; border-radius: 6px; background: #3b2424; color: #ffd7d4; font-size: .82rem; }
+    .login-submit { width: 100%; border-color: #168cff !important; background: #168cff !important; color: #07121d !important; cursor: pointer; }
+    .login-submit:disabled { cursor: wait; opacity: .72; }
+
+    .contact { padding: 110px 0; }
+    .contact-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: clamp(40px, 8vw, 100px); align-items: start; }
+    .contact-copy h2 { font-size: clamp(3.2rem, 5.6vw, 5.7rem); margin-bottom: 22px; }
+    .contact-copy p { max-width: 430px; color: var(--muted); font-size: 1.05rem; }
+    .contact-direct { display: inline-flex; margin-top: 16px; color: var(--accent-deep); font-weight: 700; text-decoration: none; }
+    .contact-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: clamp(24px, 4vw, 42px); border-top: 5px solid var(--accent); background: var(--bg-raised); box-shadow: var(--shadow); }
+    .contact-field { display: grid; gap: 7px; color: var(--muted); font-size: .8rem; font-weight: 700; }
+    .contact-field.wide { grid-column: 1 / -1; }
+    .contact-field input, .contact-field textarea { width: 100%; min-height: 48px; border: 1px solid var(--line); border-radius: 6px; padding: 11px 12px; outline: 0; background: var(--panel); color: var(--ink); font: inherit; }
+    .contact-field textarea { min-height: 132px; resize: vertical; }
+    .contact-field input:focus, .contact-field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+    .contact-actions { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .contact-actions p { margin: 0; color: var(--muted); font-size: .76rem; }
+    .contact-actions .button { cursor: pointer; flex: 0 0 auto; white-space: nowrap; }
+    .contact-actions .button:disabled { cursor: wait; opacity: .7; }
+    .form-trap { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; clip-path: inset(50%) !important; white-space: nowrap !important; }
+    .contact-status { grid-column: 1 / -1; margin: 0; padding: 11px 13px; border-radius: 6px; font-size: .84rem; }
+    .contact-status[data-state="success"] { border: 1px solid color-mix(in srgb, var(--green) 55%, var(--line)); background: color-mix(in srgb, var(--green) 13%, var(--panel)); color: var(--green); }
+    .contact-status[data-state="error"] { border: 1px solid #a45b55; background: color-mix(in srgb, #a45b55 12%, var(--panel)); color: #9a3d36; }
+    @media (prefers-color-scheme: dark) { .contact-status[data-state="error"] { color: #ffb4ad; } }
+
+    .closing { padding: 110px 0 55px; }
+    .closing-box { background: var(--accent); color: #06111b; padding: clamp(38px, 7vw, 80px); border-radius: 30px 30px 8px 30px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: end; }
+    .closing h2 { font-size: clamp(3.4rem, 6vw, 6rem); margin-bottom: 0; }
+    .closing p { font-size: 1.05rem; margin: 0 0 24px; }
+    .closing .button { border-color: #06111b; background: #06111b; color: #f4f9ff; }
+    footer { display: flex; justify-content: space-between; gap: 20px; padding: 34px 0 42px; color: var(--muted); font-size: .83rem; }
+    footer a { text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 72px; }
+      .hero-copy { max-width: 720px; }
+      .workbench { transform: none; max-width: 720px; }
+      .section-head { grid-template-columns: 1fr; gap: 18px; }
+      .workflow-grid { grid-template-columns: 1fr; }
+      .workflow-nav { grid-template-columns: repeat(4, 1fr); gap: 0; }
+      .workflow-tab { grid-template-columns: 1fr; padding-right: 12px; border-bottom: 1px solid var(--line); }
+      .workflow-tab small { display: none; }
+      .difference-grid { gap: 34px; }
+      .faq-grid { gap: 40px; }
+      .closing-box { grid-template-columns: 1fr; align-items: start; }
+    }
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 28px, 1160px); }
+      .site-nav { min-height: 60px; }
+      .mobile-menu { display: block; }
+      .nav-links { display: none; position: absolute; left: 14px; right: 14px; top: 58px; z-index: 30; background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 15px; box-shadow: var(--shadow); flex-direction: column; align-items: stretch; gap: 0; }
+      .nav-links.open { display: flex; }
+      .nav-links a, .nav-links .login-link { padding: 12px; text-align: left; }
+      h1 { font-size: clamp(3.4rem, 16vw, 5.5rem); }
+      .hero { padding: 54px 0 72px; gap: 45px; }
+      .hero-actions .button { width: 100%; }
+      .trust-line { gap: 11px; }
+      .workbench { padding: 10px; border-radius: 20px 20px 8px 8px; }
+      .app-shell { grid-template-columns: 92px minmax(0, 1fr); min-height: 420px; }
+      .app-rail { padding: 13px 8px 9px; }
+      .app-wordmark { gap: 4px; font-size: .5rem; }
+      .app-wordmark .garage-logo { width: 20px; height: 20px; }
+      .rail-label { font-size: .45rem; }
+      .rail-sub { padding-left: 12px; font-size: .39rem; }
+      .app-head { padding: 12px 10px; }
+      .app-head small { display: none; }
+      .add-button { padding: 7px; font-size: 0; }
+      .add-button::before { content: "+"; font-size: .8rem; }
+      .app-search { margin-inline: 8px; }
+      .customer:nth-child(4) { display: none; }
+      .customer { grid-template-columns: 28px minmax(0, 1fr); padding-inline: 8px; }
+      .customer .revenue-copy { display: none; }
+      .avatar { width: 28px; height: 28px; }
+      .actual-row { grid-template-columns: 28px minmax(0, 1fr); }
+      .actual-total { display: none; }
+      .trade-strip .wrap { align-items: flex-start; flex-direction: column; }
+      .workflow, .features, .difference, .faq { padding: 78px 0; }
+      .workflow-nav { grid-template-columns: 1fr; }
+      .workflow-tab { grid-template-columns: 28px 1fr; padding: 14px 0; }
+      .workflow-tab small { display: block; }
+      .product-stage { min-height: 0; padding: 20px 14px; }
+      .pipeline { grid-template-columns: 1fr; }
+      .column { min-height: 0; }
+      .column:nth-child(3) { display: none; }
+      .calendar-board { grid-template-columns: 1fr; }
+      .agenda { display: none; }
+      .record-body { grid-template-columns: 1fr; }
+      .quick-actions { display: none; }
+      .feature-ledger { grid-template-columns: 1fr; }
+      .feature, .feature:nth-child(even) { padding: 24px 0; border-right: 0; }
+      .difference-grid, .faq-grid, .contact-grid { grid-template-columns: 1fr; }
+      .job-card { position: static; }
+      .contact { padding: 78px 0; }
+      .contact-form { grid-template-columns: 1fr; padding: 24px 18px; }
+      .contact-field.wide, .contact-actions { grid-column: auto; }
+      .contact-actions { align-items: stretch; flex-direction: column; }
+      .contact-actions .button { width: 100%; }
+      .closing { padding-top: 72px; }
+      .closing-box { padding: 34px 25px; border-radius: 22px 22px 7px 22px; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="page" id="top">
+    <div class="wrap">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="LeadGarage home"><svg class="garage-logo" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path class="roof" d="M3.5 14 18 4l14.5 10v18.5h-29Z"/><path class="door" d="M9 16.5h18v16H9Z"/><path class="slat" d="M9 22h18M9 27.5h18"/></svg><span>Lead<strong>Garage</strong></span></a>
+        <button class="mobile-menu" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+        <div class="nav-links" id="nav-links"><a href="#workflow">Product</a><a href="#features">Features</a><a href="#fit">Who it’s for</a><button class="login-link" id="login-open" type="button">Log In</button><a class="nav-cta" href="#contact">Get launch updates</a></div>
+      </nav>
+    </div>
+
+    <main>
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Where leads get to work.</p>
+          <h1 id="hero-title">Your leads shouldn’t die in a spreadsheet.</h1>
+          <p>LeadGarage gives field-service businesses one practical place to manage customers, follow-up notes, one-off and recurring work, billing, and the next move for every lead.</p>
+          <div class="hero-actions"><a class="button primary" href="#product">See the product <span aria-hidden="true">→</span></a><a class="button secondary" href="#contact">Get launch updates</a></div>
+          <div class="trust-line" aria-label="Product principles"><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8 3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Real logins, company-separated data</span><span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8 3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Built for the work after the lead</span></div>
+        </div>
+
+        <div class="workbench" id="product" aria-label="LeadGarage customer workspace preview">
+          <div class="browser-bar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><span class="demo-label">Product preview · current interface</span></div>
+          <div class="app-shell">
+            <aside class="app-rail" aria-hidden="true">
+              <div class="app-wordmark"><svg class="garage-logo" viewBox="0 0 36 36" fill="none"><path class="roof" d="M3.5 14 18 4l14.5 10v18.5h-29Z"/><path class="door" d="M9 16.5h18v16H9Z"/><path class="slat" d="M9 22h18M9 27.5h18"/></svg><span>Lead<strong>Garage</strong></span></div>
+              <div class="rail-group"><div class="rail-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m7-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8" stroke="currentColor" stroke-width="2"/></svg>Customers</div><div class="rail-sub active"><span>All Customers</span><span>5</span></div><div class="rail-sub"><span>Leads</span><span>2</span></div><div class="rail-sub"><span>Archived</span><span>0</span></div></div>
+              <div class="rail-group"><div class="rail-label">Services Scheduled</div><div class="rail-sub"><span>Calendar</span><span>6</span></div><div class="rail-sub"><span>Today</span><span>1</span></div><div class="rail-sub"><span>This Month</span><span>6</span></div><div class="rail-sub"><span>Completed</span><span>2</span></div></div>
+              <div class="rail-group"><div class="rail-label">Invoices</div><div class="rail-sub"><span>Paid</span><span>2</span></div><div class="rail-sub"><span>Not Paid</span><span>4</span></div></div>
+              <div class="rail-account">Account · Change Password · Log Out</div>
+            </aside>
+            <div class="app-main">
+              <div class="app-head"><div><strong>All Customers</strong><small>Search the list or open a customer record.</small></div><div class="header-tools"><span class="filter-button" aria-label="Filter and sort"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 5h16l-6.5 7.5V19l-3 2v-8.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="add-button">+ Add Customer</span></div></div>
+              <div class="app-search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="2"/></svg>Search name, company, phone…</div>
+              <div class="customer-list">
+                <div class="customer"><span class="avatar">JT</span><span class="customer-copy"><strong>Jordan Turner</strong><span class="stage-pill purple">New Lead</span><small>General Pest Control · Marietta, GA</small></span><span class="revenue-copy">No Past Service Yet</span></div>
+                <div class="customer"><span class="avatar">MP</span><span class="customer-copy"><strong>Morgan Price</strong><span class="stage-pill">Service Scheduled</span><small>Lawn Care · Next Oct 14</small></span><span class="revenue-copy">Upcoming · $145.00</span></div>
+                <div class="customer"><span class="avatar">RB</span><span class="customer-copy"><strong>Riley Brooks</strong><span class="stage-pill">Paid Customer</span><small>Exterior Wash · Roswell, GA</small></span><span class="revenue-copy">Total Revenue · $320.00</span></div>
+                <div class="customer"><span class="avatar">AC</span><span class="customer-copy"><strong>Avery Collins</strong><span class="stage-pill orange">Past Due</span><small>Termite Inspection · Kennesaw, GA</small></span><span class="revenue-copy">7 Days Since Last Service</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="trade-strip"><div class="wrap"><strong>Built for field service.</strong><div class="trade-list" aria-label="Supported field-service businesses"><span>Pest control</span><span>Lawn care</span><span>Exterior services</span></div></div></div>
+
+      <section class="workflow wrap" id="workflow" aria-labelledby="workflow-title">
+        <div class="section-head"><h2 id="workflow-title">From first contact to paid service.</h2><p>LeadGarage keeps customer details, automatic lead status, schedules, billing, and follow-up notes connected in the same working system.</p></div>
+        <div class="workflow-grid">
+          <div class="workflow-nav" role="tablist" aria-label="Product views">
+            <button class="workflow-tab" type="button" role="tab" aria-selected="true" aria-controls="stage-view" data-view="customers"><span class="num">01</span><span><strong>Run the customer list</strong><small>Search every customer; filter and sort only when you need to.</small></span></button>
+            <button class="workflow-tab" type="button" role="tab" aria-selected="false" aria-controls="stage-view" data-view="calendar"><span class="num">02</span><span><strong>Schedule the service</strong><small>Book one-off or recurring work and see it by day or month.</small></span></button>
+            <button class="workflow-tab" type="button" role="tab" aria-selected="false" aria-controls="stage-view" data-view="record"><span class="num">03</span><span><strong>Keep the full history</strong><small>Contact details, property info, notes, services, and payments stay together.</small></span></button>
+            <button class="workflow-tab" type="button" role="tab" aria-selected="false" aria-controls="stage-view" data-view="billing"><span class="num">04</span><span><strong>Know what’s paid</strong><small>Separate Paid and Not Paid work with totals and date filters.</small></span></button>
+          </div>
+          <div class="product-stage" id="stage-view" role="tabpanel" tabindex="0" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="features" id="features" aria-labelledby="features-title"><div class="wrap"><div class="section-head"><h2 id="features-title">The useful stuff. Nothing buried.</h2><p>A focused CRM for customer follow-up, service scheduling, payment tracking, and the daily work of a field-service team.</p></div><div class="feature-ledger"><article class="feature"><span class="feature-number">01</span><div><h3>Automatic lead status</h3><p>Scheduling sets Service Scheduled. Paid work becomes Paid Customer. Overdue unpaid work becomes Past Due. Cancel or delete the service and the lead returns to Contact Made.</p></div></article><article class="feature"><span class="feature-number">02</span><div><h3>One-off or recurring work</h3><p>Create one visit or monthly services for 1, 3, 6, 9, or 12 months—or choose a custom end date. Each visit keeps its own billing record.</p></div></article><article class="feature"><span class="feature-number">03</span><div><h3>Billing on every service</h3><p>Record the amount, Paid or Not Paid status, and payment method: Cash, Card, Check, Online, or Other.</p></div></article><article class="feature"><span class="feature-number">04</span><div><h3>Reports that match the work</h3><p>See Calendar, Today, This Month, and Completed service views, plus Paid and Not Paid invoice reports with totals and service-date filters.</p></div></article><article class="feature"><span class="feature-number">05</span><div><h3>Two kinds of notes</h3><p>Keep editable, internal-only Customer Notes pinned to the record and add dated Follow-Up Notes to the customer timeline.</p></div></article><article class="feature"><span class="feature-number">06</span><div><h3>Safer customer records</h3><p>Duplicate records are blocked. Archive and restore customers without losing their history. Real logins keep each company’s data separate.</p></div></article></div></div></section>
+
+      <section class="difference wrap" id="fit" aria-labelledby="difference-title"><div class="difference-grid"><div><h2 id="difference-title">Built like a workbench, not a cockpit.</h2><p class="lead">Field-service teams need one reliable place to know who called, what the property needs, what is scheduled, and whether the work was paid.</p><div class="promise"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2 3 5v5c0 4.4 3 7 7 8 4-1 7-3.6 7-8V5l-7-3Z" stroke="currentColor" stroke-width="1.8"/><path d="m7 10 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Made for field-service operations</strong><p>Pest control, lawn care, and exterior-service teams can work from the same customer-centered system.</p></div></div><div class="promise"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2 3 5v5c0 4.4 3 7 7 8 4-1 7-3.6 7-8V5l-7-3Z" stroke="currentColor" stroke-width="1.8"/><path d="m7 10 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Less manual status chasing</strong><p>Lead status reacts to scheduled, cancelled, deleted, paid, and past-due service activity.</p></div></div><div class="promise"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2 3 5v5c0 4.4 3 7 7 8 4-1 7-3.6 7-8V5l-7-3Z" stroke="currentColor" stroke-width="1.8"/><path d="m7 10 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Customer context stays intact</strong><p>Residential or commercial, one visit or a recurring series—the record carries contact, property, note, service, and billing history.</p></div></div></div><aside class="job-card" aria-label="LeadGarage workflow summary"><span class="label">A cleaner daily loop</span><blockquote>Every lead has a next move. Every service has a payment state.</blockquote><div class="job-flow"><div class="job-step"><span>01</span><strong>Find the customer</strong></div><div class="job-step"><span>02</span><strong>Record the follow-up</strong></div><div class="job-step"><span>03</span><strong>Schedule the service</strong></div><div class="job-step"><span>04</span><strong>Collect and report</strong></div></div></aside></div></section>
+
+      <section class="faq" aria-labelledby="faq-title"><div class="wrap faq-grid"><div><h2 id="faq-title">Straight answers.</h2></div><div><details><summary>What kinds of businesses is LeadGarage made for?</summary><p>Field-service businesses such as pest control, lawn care, and exterior-service companies that need customer follow-up, scheduling, and billing in one place.</p></details><details><summary>How does automatic lead status work?</summary><p>A scheduled service sets Service Scheduled. Cancelling or deleting that service returns the lead to Contact Made. Paid work moves the customer to Paid Customer, while overdue unpaid work becomes Past Due.</p></details><details><summary>Can LeadGarage handle recurring service?</summary><p>Yes. Create monthly recurring service for 1, 3, 6, 9, or 12 months, or choose a custom end date. Every visit is a separate service record with its own cost and payment state.</p></details><details><summary>How are notes organized?</summary><p>Customer Notes are editable internal-only remarks pinned to the record. Follow-Up Notes form a dated timeline for calls, results, and ongoing context.</p></details><details><summary>What happens when a customer is archived?</summary><p>The record is removed from active work without being deleted. It can be restored later with its full customer, service, payment, and note history intact.</p></details><details><summary>Is company data separated?</summary><p>Yes. LeadGarage uses real user logins and keeps each company’s records separated. Users can also change their password or log out from the side navigation.</p></details></div></div></section>
+
+      <section class="contact wrap" id="contact" aria-labelledby="contact-title"><div class="contact-grid"><div class="contact-copy"><p class="eyebrow">Get a call or email when we launch</p><h2 id="contact-title">Interested in LeadGarage?</h2><p>We’re still getting ready. Share your contact information and a little about your field-service business, and we’ll reach out by phone or email once LeadGarage is up and running.</p><a class="contact-direct" href="mailto:25.Alexdiaz@gmail.com">25.Alexdiaz@gmail.com</a></div><form class="contact-form" id="contact-form"><label class="contact-field"><span>Name</span><input id="contact-name" name="name" autocomplete="name" required /></label><label class="contact-field"><span>Company</span><input id="contact-company" name="company" autocomplete="organization" /></label><label class="contact-field"><span>Email</span><input id="contact-email" name="email" type="email" autocomplete="email" required /></label><label class="contact-field"><span>Phone</span><input id="contact-phone" name="phone" type="tel" autocomplete="tel" /></label><label class="contact-field wide"><span>What should we know?</span><textarea id="contact-message" name="message" required placeholder="Tell us about your team, current process, or the problem you want to solve."></textarea></label><label class="form-trap" aria-hidden="true"><span>Leave this field empty</span><input id="contact-honeypot" name="_honey" type="text" tabindex="-1" autocomplete="off" /></label><input type="hidden" name="_subject" value="LeadGarage launch interest" /><input type="hidden" name="_captcha" value="false" /><p class="contact-status" id="contact-status" role="status" aria-live="polite" hidden></p><div class="contact-actions"><p>We’ll keep your details on the launch list and reach out once we’re up and running.</p><button class="button primary" id="contact-submit" type="submit">Send launch interest <span aria-hidden="true">→</span></button></div></form></div></section>
+
+      <section class="closing wrap" aria-labelledby="closing-title"><div class="closing-box"><h2 id="closing-title">Put every lead back in play.</h2><div><p>See how LeadGarage can organize the customer, the service, and the payment without adding more busywork.</p><a class="button" href="#contact">Get launch updates <span aria-hidden="true">→</span></a></div></div></section>
+    </main>
+    <footer class="wrap"><span><strong>LeadGarage</strong> · Where leads get to work.</span><div><a href="#workflow">Product tour</a> · <a href="#contact">Contact</a></div></footer>
+  </div>
+
+  <div class="login-backdrop" id="login-backdrop" hidden>
+    <section class="login-dialog" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <header class="login-head"><span class="brand"><svg class="garage-logo" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path class="roof" d="M3.5 14 18 4l14.5 10v18.5h-29Z"/><path class="door" d="M9 16.5h18v16H9Z"/><path class="slat" d="M9 22h18M9 27.5h18"/></svg><span>Lead<strong>Garage</strong></span></span><button class="login-close" id="login-close" type="button" aria-label="Close login"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></header>
+      <form class="login-body" id="login-form"><div class="login-intro"><h2 id="login-title">Log in to your workspace</h2><p>Use the email and password for your LeadGarage account.</p></div><label class="login-field"><span>Email</span><input id="login-email" type="email" autocomplete="username" required /></label><label class="login-field"><span>Password</span><input id="login-password" type="password" autocomplete="current-password" required /></label><p class="login-error" id="login-error" role="alert" hidden></p><button class="button login-submit" id="login-submit" type="submit">Log In</button></form>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      var stage = document.getElementById('stage-view');
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.workflow-tab'));
+      var views = {
+        customers: '<div class="stage-content"><div class="stage-label"><strong>All Customers</strong><small>Search stays visible · filters stay tucked away</small></div><div class="actual-shell"><div class="actual-head"><div><strong>All Customers</strong><small>Customer records and automatic status</small></div><div class="actual-actions"><span class="filter-button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 5h16l-6.5 7.5V19l-3 2v-8.5Z" stroke="currentColor" stroke-width="1.8"/></svg></span><span class="add-button">+ Add Customer</span></div></div><div class="actual-search">⌕ &nbsp; Search name, company, phone…</div><div class="actual-row"><span class="avatar">JT</span><span class="actual-copy"><strong>Jordan Turner</strong><span class="stage-pill purple">New Lead</span><small>General Pest Control · No Past Service Yet</small></span><span class="actual-total">No Revenue Yet</span></div><div class="actual-row"><span class="avatar">MP</span><span class="actual-copy"><strong>Morgan Price</strong><span class="stage-pill">Service Scheduled</span><small>Lawn Care · Next Oct 14</small></span><span class="actual-total">Upcoming · $145.00</span></div><div class="actual-row"><span class="avatar">RB</span><span class="actual-copy"><strong>Riley Brooks</strong><span class="stage-pill">Paid Customer</span><small>Exterior Wash · 12 Days Since Last Service</small></span><span class="actual-total">Total Revenue · $320.00</span></div><div class="actual-row"><span class="avatar">AC</span><span class="actual-copy"><strong>Avery Collins</strong><span class="stage-pill orange">Past Due</span><small>Termite Inspection · Marietta, GA</small></span><span class="actual-total">Outstanding · $180.00</span></div></div></div>',
+        calendar: '<div class="stage-content"><div class="stage-label"><strong>Service Calendar</strong><small>One-off and recurring work</small></div><div class="actual-shell"><div class="actual-head"><div><strong>October 2026</strong><small>Calendar · Today · This Month · Completed</small></div><div class="actual-actions"><span class="filter-button">‹</span><span class="filter-button">›</span></div></div><div class="calendar-real"><span class="weekday">SUN</span><span class="weekday">MON</span><span class="weekday">TUE</span><span class="weekday">WED</span><span class="weekday">THU</span><span class="weekday">FRI</span><span class="weekday">SAT</span><span class="day muted">27</span><span class="day muted">28</span><span class="day muted">29</span><span class="day muted">30</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day booked">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span></div><div class="day-agenda-mini"><div class="agenda-title"><strong>Wednesday, Oct 14</strong><span>2 services</span></div><div class="agenda-row"><time>8:00 AM</time><span><strong>Morgan Price</strong><small>General Pest Control · Recurring 6 Months</small><span class="money-line">$145.00 <i class="unpaid-badge">Not Paid</i></span></span><span>›</span></div><div class="agenda-row"><time>1:30 PM</time><span><strong>Riley Brooks</strong><small>Exterior Wash</small><span class="money-line">$320.00 <i class="paid-badge">Paid · Card</i></span></span><span>›</span></div></div></div></div>',
+        record: '<div class="stage-content"><div class="stage-label"><strong>Customer Record</strong><small>Service, billing, property, and note history</small></div><div class="record-real"><div class="record-top"><div class="record-avatar">MP</div><div><h4>Morgan Price</h4><small>Residential Account · General Pest Control</small><div class="record-statuses"><span class="stage-pill">Service Scheduled</span></div></div><div class="quick-actions"><span>Call</span><span>Text</span><span>Email</span></div></div><div class="record-money"><span>Total Collected from This Customer</span><strong>$290.00</strong></div><div class="record-body"><div class="detail-stack"><div class="detail"><span>Phone</span>555-123-4567</div><div class="detail"><span>Email</span>morgan@example.com</div><div class="detail"><span>Service Address</span>Marietta, GA</div><div class="detail"><span>Property Access</span>Use side gate; dog in back yard.</div><div class="detail"><span>Next Service</span>Oct 14 · $145 · Not Paid</div></div><div class="record-notes"><h5>Customer Notes</h5><div class="pinned-mini"><small>Customer Notes · Internal-Only Remarks</small>Prefers a text before arrival. Gate code on file.</div><div class="follow-mini">Follow-Up Note</div><div class="note-mini">Add a Follow-Up Note</div><div class="timeline-item"><strong>Confirmed recurring option</strong><small>Oct 11 · 4:40 PM · Edit Follow-Up Note</small></div></div></div></div></div>',
+        billing: '<div class="stage-content"><div class="stage-label"><strong>Not Paid Invoices</strong><small>Amounts follow the service record</small></div><div class="actual-shell"><div class="actual-head"><div><strong>Not Paid Invoices</strong><small>Search name, service, company…</small></div><div class="actual-actions"><span class="filter-button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 5h16l-6.5 7.5V19l-3 2v-8.5Z" stroke="currentColor" stroke-width="1.8"/></svg></span><span class="add-button">+ Add Customer</span></div></div><div class="invoice-tabs" role="tablist" aria-label="Invoice status"><button type="button" role="tab" aria-selected="false" data-invoice-view="paid">Paid</button><button class="active" type="button" role="tab" aria-selected="true" data-invoice-view="not-paid">Not Paid</button></div><div class="invoice-summary"><div><span id="invoice-total-label">Total Outstanding</span><strong id="invoice-total">$505.00</strong></div><div><span>Service Date</span><strong style="font-size:.7rem">This Month</strong></div></div><div class="invoice-filter-line"><strong id="invoice-status-label">Not Paid</strong><span id="invoice-count">3 invoices</span></div><div id="invoice-list"><div class="agenda-row" style="padding-inline:12px"><time>Oct 14<br>8:00 AM</time><span><strong>Morgan Price</strong><small>General Pest Control</small><span class="money-line">$145.00 <i class="unpaid-badge">Not Paid</i></span></span><span>›</span></div><div class="agenda-row" style="padding-inline:12px"><time>Oct 18<br>10:30 AM</time><span><strong>Avery Collins</strong><small>Termite Inspection</small><span class="money-line">$180.00 <i class="unpaid-badge">Not Paid</i></span></span><span>›</span></div><div class="agenda-row" style="padding-inline:12px"><time>Oct 22<br>2:00 PM</time><span><strong>Jordan Turner</strong><small>Exterior Wash</small><span class="money-line">$180.00 <i class="unpaid-badge">Not Paid</i></span></span><span>›</span></div></div></div></div>'
+      };
+      function showView(name) { stage.innerHTML = views[name]; tabs.forEach(function (tab) { tab.setAttribute('aria-selected', tab.getAttribute('data-view') === name ? 'true' : 'false'); }); }
+      tabs.forEach(function (tab) { tab.addEventListener('click', function () { showView(tab.getAttribute('data-view')); }); });
+      stage.addEventListener('click', function (event) {
+        var invoiceTab = event.target.closest('[data-invoice-view]');
+        if (!invoiceTab) return;
+        var mode = invoiceTab.getAttribute('data-invoice-view');
+        var isPaid = mode === 'paid';
+        Array.prototype.forEach.call(stage.querySelectorAll('[data-invoice-view]'), function (tab) {
+          var selected = tab.getAttribute('data-invoice-view') === mode;
+          tab.classList.toggle('active', selected);
+          tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+        stage.querySelector('.stage-label strong').textContent = isPaid ? 'Paid Invoices' : 'Not Paid Invoices';
+        stage.querySelector('.actual-head strong').textContent = isPaid ? 'Paid Invoices' : 'Not Paid Invoices';
+        stage.querySelector('#invoice-total-label').textContent = isPaid ? 'Total Collected' : 'Total Outstanding';
+        stage.querySelector('#invoice-total').textContent = isPaid ? '$320.00' : '$505.00';
+        stage.querySelector('#invoice-status-label').textContent = isPaid ? 'Paid' : 'Not Paid';
+        stage.querySelector('#invoice-count').textContent = isPaid ? '1 invoice' : '3 invoices';
+        stage.querySelector('#invoice-list').innerHTML = isPaid
+          ? '<div class="agenda-row" style="padding-inline:12px"><time>Oct 9<br>1:30 PM</time><span><strong>Riley Brooks</strong><small>Exterior Wash</small><span class="money-line">$320.00 <i class="paid-badge">Paid · Card</i></span></span><span>›</span></div>'
+          : '<div class="agenda-row" style="padding-inline:12px"><time>Oct 14<br>8:00 AM</time><span><strong>Morgan Price</strong><small>General Pest Control</small><span class="money-line">$145.00 <i class="unpaid-badge">Not Paid</i></span></span><span>›</span></div><div class="agenda-row" style="padding-inline:12px"><time>Oct 18<br>10:30 AM</time><span><strong>Avery Collins</strong><small>Termite Inspection</small><span class="money-line">$180.00 <i class="unpaid-badge">Not Paid</i></span></span><span>›</span></div><div class="agenda-row" style="padding-inline:12px"><time>Oct 22<br>2:00 PM</time><span><strong>Jordan Turner</strong><small>Exterior Wash</small><span class="money-line">$180.00 <i class="unpaid-badge">Not Paid</i></span></span><span>›</span></div>';
+      });
+      showView('customers');
+      var menuButton = document.querySelector('.mobile-menu');
+      var navLinks = document.getElementById('nav-links');
+      menuButton.addEventListener('click', function () { var isOpen = navLinks.classList.toggle('open'); menuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); menuButton.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation'); });
+      navLinks.addEventListener('click', function (event) { if (event.target.tagName === 'A') { navLinks.classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false'); menuButton.setAttribute('aria-label', 'Open navigation'); } });
+
+      var contactForm = document.getElementById('contact-form');
+      var contactSubmit = document.getElementById('contact-submit');
+      var contactStatus = document.getElementById('contact-status');
+      function setContactStatus(message, state) {
+        contactStatus.textContent = message;
+        contactStatus.dataset.state = state || '';
+        contactStatus.hidden = !message;
+      }
+      contactForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        setContactStatus('', '');
+        contactSubmit.disabled = true;
+        contactSubmit.textContent = 'Sending…';
+        var formData = new FormData(contactForm);
+        var company = document.getElementById('contact-company').value.trim();
+        formData.set('_subject', 'LeadGarage launch interest' + (company ? ' — ' + company : ''));
+        fetch('https://formsubmit.co/25.alexdiaz@gmail.com', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: formData
+        }).then(function (response) {
+          if (!response.ok) throw new Error('Request failed');
+          return response.text();
+        }).then(function () {
+          contactForm.reset();
+          setContactStatus('Thanks — your interest was sent. We’ll reach out once LeadGarage is up and running.', 'success');
+        }).catch(function () {
+          setContactStatus("We couldn’t send that right now. Please try again, or email 25.Alexdiaz@gmail.com.", 'error');
+        }).finally(function () {
+          contactSubmit.disabled = false;
+          contactSubmit.innerHTML = 'Send launch interest <span aria-hidden="true">→</span>';
+        });
+      });
+
+      var loginOpen = document.getElementById('login-open');
+      var loginBackdrop = document.getElementById('login-backdrop');
+      var loginClose = document.getElementById('login-close');
+      var loginForm = document.getElementById('login-form');
+      var loginEmail = document.getElementById('login-email');
+      var loginPassword = document.getElementById('login-password');
+      var loginError = document.getElementById('login-error');
+      var loginSubmit = document.getElementById('login-submit');
+      var loginReturnFocus = null;
+      function setLoginError(message) {
+        loginError.textContent = message;
+        loginError.hidden = !message;
+      }
+      function openLogin() {
+        loginReturnFocus = document.activeElement;
+        loginBackdrop.hidden = false;
+        navLinks.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', 'Open navigation');
+        setLoginError('');
+        window.setTimeout(function () { loginEmail.focus(); }, 0);
+      }
+      function closeLogin() {
+        loginBackdrop.hidden = true;
+        loginForm.reset();
+        setLoginError('');
+        loginSubmit.disabled = false;
+        loginSubmit.textContent = 'Log In';
+        if (loginReturnFocus && loginReturnFocus.focus) loginReturnFocus.focus();
+      }
+      loginOpen.addEventListener('click', openLogin);
+      loginClose.addEventListener('click', closeLogin);
+      loginBackdrop.addEventListener('click', function (event) { if (event.target === loginBackdrop) closeLogin(); });
+      document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !loginBackdrop.hidden) closeLogin(); });
+      loginForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        setLoginError('');
+        loginSubmit.disabled = true;
+        loginSubmit.textContent = 'Signing In…';
+        fetch('https://app.getleadgarage.com/actions', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'login', args: { email: loginEmail.value.trim(), password: loginPassword.value } })
+        }).then(function (response) {
+          if (response.status === 401) throw { invalidCredentials: true };
+          if (!response.ok) throw new Error('Request failed');
+          return response.json();
+        }).then(function (result) {
+          if (result && result.ok === true) {
+            window.location.assign('https://app.getleadgarage.com');
+            return;
+          }
+          throw new Error('Sign-in failed');
+        }).catch(function (error) {
+          setLoginError(error && error.invalidCredentials ? 'Invalid email or password.' : "Couldn't sign you in. Try again.");
+          loginSubmit.disabled = false;
+          loginSubmit.textContent = 'Log In';
+          loginPassword.focus();
+          loginPassword.select();
+        });
+      });
+    }());
+  </script>
+</body>
+</html>
