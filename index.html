@@ -27,6 +27,8 @@
       --steel: #303b38;
       --green: #287553;
       --shadow: 0 20px 55px rgba(25, 34, 31, .13);
+      --section-pad: 112px;
+      --h2: clamp(3rem, 5.2vw, 5.1rem);
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 24px;
@@ -58,9 +60,9 @@
     .page { min-height: 100vh; }
     .wrap { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
     .site-nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--line); }
-    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-size: 1.15rem; line-height: 1; letter-spacing: -.035em; font-weight: 760; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-size: 1.4rem; line-height: 1; letter-spacing: -.035em; font-weight: 760; }
     .brand strong { color: var(--accent-deep); font-weight: 840; }
-    .garage-logo { width: 34px; height: 34px; overflow: visible; flex: 0 0 auto; }
+    .garage-logo { width: 44px; height: 44px; overflow: visible; flex: 0 0 auto; }
     .garage-logo .roof { fill: var(--ink); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
     .garage-logo .door { fill: var(--accent); }
     .garage-logo .slat { stroke: var(--bg-raised); stroke-width: 2; }
@@ -136,9 +138,9 @@
 
     section { scroll-margin-top: 24px; }
     .section-head { display: grid; grid-template-columns: .7fr 1fr; gap: 40px; align-items: end; margin-bottom: 42px; }
-    .section-head h2 { font-size: clamp(3rem, 5.2vw, 5.1rem); margin-bottom: 0; letter-spacing: -.025em; }
+    .section-head h2 { font-size: var(--h2); margin-bottom: 0; letter-spacing: -.025em; }
     .section-head p { color: var(--muted); max-width: 600px; margin: 0 0 7px; font-size: 1.08rem; }
-    .workflow { padding: 112px 0; }
+    .workflow { padding: var(--section-pad) 0; }
     .workflow-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 20px; }
     .workflow-nav { display: grid; gap: 10px; align-content: start; }
     .workflow-tab { width: 100%; text-align: left; border: 0; border-top: 1px solid var(--line); background: transparent; color: var(--ink); padding: 20px 12px 20px 0; cursor: pointer; display: grid; grid-template-columns: 36px 1fr; gap: 14px; }
@@ -240,7 +242,7 @@
     .invoice-filter-line { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-top: 1px solid #d8dee5; border-bottom: 2px solid #202429; background: white; font-size: .56rem; }
     .invoice-filter-line span:last-child { color: #004fb8; font-weight: 750; }
 
-    .features { background: var(--bg-raised); padding: 112px 0; border-block: 1px solid var(--line); }
+    .features { background: var(--bg-raised); padding: var(--section-pad) 0; border-block: 1px solid var(--line); }
     .feature-ledger { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--line); }
     .feature { display: grid; grid-template-columns: 46px 1fr; gap: 18px; padding: 30px 34px 30px 0; border-bottom: 1px solid var(--line); }
     .feature:nth-child(odd) { border-right: 1px solid var(--line); }
@@ -249,10 +251,10 @@
     .feature h3 { font-size: 1.85rem; margin: 0 0 7px; }
     .feature p { margin: 0; color: var(--muted); font-size: .92rem; }
 
-    .difference { padding: 112px 0; }
+    .difference { padding: var(--section-pad) 0; }
     .difference-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
-    .difference h2 { font-size: clamp(3.2rem, 5.5vw, 5.6rem); margin-bottom: 24px; }
-    .difference .lead { color: var(--muted); font-size: 1.12rem; margin-bottom: 30px; }
+    .difference h2 { font-size: var(--h2); margin-bottom: 24px; }
+    .difference .lead { color: var(--muted); font-size: 1.08rem; margin-bottom: 30px; }
     .promise { display: grid; grid-template-columns: 22px 1fr; gap: 12px; margin: 18px 0; }
     .promise svg { margin-top: 3px; color: var(--accent-deep); }
     .promise strong { display: block; margin-bottom: 3px; }
@@ -265,9 +267,9 @@
     .job-step span { color: var(--accent); font: 600 1.2rem "Barlow Condensed", sans-serif; }
     .job-step strong { font-size: .9rem; }
 
-    .faq { padding: 100px 0; background: var(--bg-raised); border-top: 1px solid var(--line); }
+    .faq { padding: var(--section-pad) 0; background: var(--bg-raised); border-top: 1px solid var(--line); }
     .faq-grid { display: grid; grid-template-columns: .58fr 1fr; gap: 70px; }
-    .faq h2 { font-size: clamp(3rem, 5vw, 4.9rem); }
+    .faq h2 { font-size: var(--h2); }
     details { border-top: 1px solid var(--line); padding: 18px 0; }
     details:last-child { border-bottom: 1px solid var(--line); }
     summary { cursor: pointer; list-style: none; font-weight: 600; padding-right: 30px; position: relative; }
@@ -295,10 +297,10 @@
     .login-submit { width: 100%; border-color: #168cff !important; background: #168cff !important; color: #07121d !important; cursor: pointer; }
     .login-submit:disabled { cursor: wait; opacity: .72; }
 
-    .contact { padding: 110px 0; }
+    .contact { padding: var(--section-pad) 0; }
     .contact-grid { display: grid; grid-template-columns: .75fr 1.25fr; gap: clamp(40px, 8vw, 100px); align-items: start; }
-    .contact-copy h2 { font-size: clamp(3.2rem, 5.6vw, 5.7rem); margin-bottom: 22px; }
-    .contact-copy p { max-width: 430px; color: var(--muted); font-size: 1.05rem; }
+    .contact-copy h2 { font-size: var(--h2); margin-bottom: 22px; }
+    .contact-copy p { max-width: 430px; color: var(--muted); font-size: 1.08rem; }
     .contact-direct { display: inline-flex; margin-top: 16px; color: var(--accent-deep); font-weight: 700; text-decoration: none; }
     .contact-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: clamp(24px, 4vw, 42px); border-top: 5px solid var(--accent); background: var(--bg-raised); box-shadow: var(--shadow); }
     .contact-field { display: grid; gap: 7px; color: var(--muted); font-size: .8rem; font-weight: 700; }
@@ -316,13 +318,15 @@
     .contact-status[data-state="error"] { border: 1px solid #a45b55; background: color-mix(in srgb, #a45b55 12%, var(--panel)); color: #9a3d36; }
     @media (prefers-color-scheme: dark) { .contact-status[data-state="error"] { color: #ffb4ad; } }
 
-    .closing { padding: 110px 0 55px; }
+    .closing { padding: var(--section-pad) 0 55px; }
     .closing-box { background: var(--accent); color: #06111b; padding: clamp(38px, 7vw, 80px); border-radius: 30px 30px 8px 30px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: end; }
-    .closing h2 { font-size: clamp(3.4rem, 6vw, 6rem); margin-bottom: 0; }
-    .closing p { font-size: 1.05rem; margin: 0 0 24px; }
+    .closing h2 { font-size: var(--h2); margin-bottom: 0; }
+    .closing p { font-size: 1.08rem; margin: 0 0 24px; }
     .closing .button { border-color: #06111b; background: #06111b; color: #f4f9ff; }
-    footer { display: flex; justify-content: space-between; gap: 20px; padding: 34px 0 42px; color: var(--muted); font-size: .83rem; }
+    footer { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 34px 0 42px; color: var(--muted); font-size: .83rem; }
     footer a { text-decoration: none; }
+    .footer-brand { display: inline-flex; align-items: center; gap: 10px; }
+    .footer-brand .garage-logo { width: 26px; height: 26px; }
 
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; padding-top: 72px; }
@@ -367,7 +371,7 @@
       .actual-row { grid-template-columns: 28px minmax(0, 1fr); }
       .actual-total { display: none; }
       .trade-strip .wrap { align-items: flex-start; flex-direction: column; }
-      .workflow, .features, .difference, .faq { padding: 78px 0; }
+      .workflow, .features, .difference, .faq { padding: 80px 0; }
       .workflow-nav { grid-template-columns: 1fr; }
       .workflow-tab { grid-template-columns: 28px 1fr; padding: 14px 0; }
       .workflow-tab small { display: block; }
@@ -383,12 +387,12 @@
       .feature, .feature:nth-child(even) { padding: 24px 0; border-right: 0; }
       .difference-grid, .faq-grid, .contact-grid { grid-template-columns: 1fr; }
       .job-card { position: static; }
-      .contact { padding: 78px 0; }
+      .contact { padding: 80px 0; }
       .contact-form { grid-template-columns: 1fr; padding: 24px 18px; }
       .contact-field.wide, .contact-actions { grid-column: auto; }
       .contact-actions { align-items: stretch; flex-direction: column; }
       .contact-actions .button { width: 100%; }
-      .closing { padding-top: 72px; }
+      .closing { padding: 80px 0 40px; }
       .closing-box { padding: 34px 25px; border-radius: 22px 22px 7px 22px; }
       footer { flex-direction: column; }
     }
@@ -464,7 +468,7 @@
 
       <section class="closing wrap" aria-labelledby="closing-title"><div class="closing-box"><h2 id="closing-title">Put every lead back in play.</h2><div><p>See how LeadGarage can organize the customer, the service, and the payment without adding more busywork.</p><a class="button" href="#contact">Get launch updates <span aria-hidden="true">→</span></a></div></div></section>
     </main>
-    <footer class="wrap"><span><strong>LeadGarage</strong> · Where leads get to work.</span><div><a href="#workflow">Product tour</a> · <a href="#contact">Contact</a></div></footer>
+    <footer class="wrap"><span class="footer-brand"><svg class="garage-logo" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path class="roof" d="M3.5 14 18 4l14.5 10v18.5h-29Z"/><path class="door" d="M9 16.5h18v16H9Z"/><path class="slat" d="M9 22h18M9 27.5h18"/></svg><span><strong>LeadGarage</strong> · Where leads get to work.</span></span><div><a href="#workflow">Product tour</a> · <a href="#contact">Contact</a></div></footer>
   </div>
 
   <div class="login-backdrop" id="login-backdrop" hidden>
